@@ -1,5 +1,7 @@
 import React from "react"
-// Thêm import useRef
+import * as XLSX from "xlsx";
+import XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
+import { saveAs } from "file-saver";
 import html2pdf from "html2pdf.js"
 import { ROOMS, SLOTS, DAYS } from "@/lib/timeTableData"
 import { initializeApp } from "firebase/app";
@@ -13,6 +15,7 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
 import { Toaster } from "@/components/ui/toaster"
+
 
 const makeKey = (dayId, slot, room) => `${dayId}|${slot}|${room}`
 
@@ -28,6 +31,51 @@ const randomColor = () => {
 }
 
 export default function App() {
+  // Hàm xuất Excel giữ nguyên định dạng mẫu
+  const handleExportExcel = async () => {
+  try {
+    // 1) Đọc file mẫu (giữ nguyên style)
+    const buf = await fetch("/book1.xlsx").then(r => r.arrayBuffer());
+    const workbook = await XlsxPopulate.fromDataAsync(buf);
+    const sheet = workbook.sheet(0); // sheet đầu
+
+    // 2) Ghi dữ liệu: chỉ .value() => KHÔNG động chạm format
+    let startRow = 4; // đúng như bạn đang dùng
+    for (let dayIdx = 0; dayIdx < DAYS.length; dayIdx++) {
+      const day = DAYS[dayIdx];
+      for (let slotIdx = 0; slotIdx < SLOTS.length; slotIdx++) {
+        const slot = SLOTS[slotIdx];
+        const row = startRow + dayIdx * SLOTS.length + slotIdx;
+
+        sheet.cell(`A${row}`).value(day.label); // cột Thứ
+        sheet.cell(`B${row}`).value(slot);      // cột Giờ
+
+        for (let roomIdx = 0; roomIdx < ROOMS.length; roomIdx++) {
+          const room = ROOMS[roomIdx];
+          const key = `${day.id}|${slot}|${room}`;
+          const item = items[key];
+
+          const colChar = String.fromCharCode(67 + roomIdx); // 'C' + roomIdx
+          if (item && item.subject) {
+            let teacherName = (item.teacher || "")
+              .replace(/^(Thầy|Cô)\s*/i, "")
+              .trim();
+            sheet.cell(`${colChar}${row}`).value(`${teacherName} ${item.subject}`);
+          } else {
+            sheet.cell(`${colChar}${row}`).value("");
+          }
+        }
+      }
+    }
+
+    // 3) Xuất file — XlsxPopulate sẽ giữ nguyên style của template
+    const blob = await workbook.outputAsync(); // mặc định MIME chuẩn xlsx
+    saveAs(blob, "thoi-khoa-bieu.xlsx");
+  } catch (err) {
+    toast({ title: "Lỗi xuất Excel", description: err.message });
+  }
+};
+
   // Mật khẩu truy cập (có thể đổi theo ý muốn)
   const ACCESS_PASSWORD = "12345678";
   // Định nghĩa slugMap và teacherSlugList ở đầu function App để dùng ở mọi nơi
@@ -466,6 +514,9 @@ export default function App() {
         <div className="flex justify-end mb-2 sm:mb-3 no-print gap-1 sm:gap-2">
           <Button size="sm" className="px-2 md:px-6 h-8 md:h-11 text-xs md:text-lg" variant="outline" onClick={handleExportPDF}>
             Xuất PDF
+          </Button>
+          <Button size="sm" className="px-2 md:px-6 h-8 md:h-11 text-xs md:text-lg" variant="outline" onClick={handleExportExcel}>
+            Tải Excel
           </Button>
         </div>
         <div className="w-full overflow-x-auto" ref={tableRef}>
