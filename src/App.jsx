@@ -512,12 +512,12 @@ export default function App() {
 
   <main className="w-full max-w-full px-0 sm:px-2 py-2 sm:py-6 mx-auto">
         <div className="flex justify-end mb-2 sm:mb-3 no-print gap-1 sm:gap-2">
-          <Button size="sm" className="px-2 md:px-6 h-8 md:h-11 text-xs md:text-lg" variant="outline" onClick={handleExportPDF}>
+          {/* <Button size="sm" className="px-2 md:px-6 h-8 md:h-11 text-xs md:text-lg" variant="outline" onClick={handleExportPDF}>
             Xuất PDF
-          </Button>
-          {/* <Button size="sm" className="px-2 md:px-6 h-8 md:h-11 text-xs md:text-lg" variant="outline" onClick={handleExportExcel}>
-            Tải Excel
           </Button> */}
+          <Button size="sm" className="px-2 md:px-6 h-8 md:h-11 text-xs md:text-lg" variant="outline" onClick={handleExportExcel}>
+            Tải Excel
+          </Button>
         </div>
         <div className="w-full overflow-x-auto" ref={tableRef}>
           {filterTeacherLabel && (
