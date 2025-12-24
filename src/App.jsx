@@ -94,7 +94,8 @@ export default function App() {
     s5t6u7v8: "Thầy Cường",
     w9x0y1z2: "Thầy Bình",
     a3b4c5d6: "Thầy Tâm",
-    e7f8g9h0: "GVNN"
+    e7f8g9h0: "GVNN",
+    i1j2k3l4: "Cô Khen"
   };
   const teacherSlugList = Object.keys(slugMap);
   // Lấy teacher từ URL (nếu có) - chỉ khai báo 1 lần
@@ -170,6 +171,7 @@ export default function App() {
     "Cô Giang",
     "Cô Duyên",
     "Cô Hà",
+    "Cô Khen",
     "Cô Quỳnh",
     "Cô Ngọc",
     "Cô Hoa",
@@ -182,6 +184,7 @@ export default function App() {
     "Thầy Bình",
     "Thầy Tâm",
     "GVNN"
+
   ];
   // Mảng màu thẻ tương ứng giáo viên (cùng index với TEACHERS)
   const TEACHER_COLORS = [
@@ -200,7 +203,8 @@ export default function App() {
     "bg-indigo-100 text-indigo-700",
     "bg-gray-100 text-gray-700",
     "bg-red-100 text-red-700",
-    "bg-yellow-100 text-yellow-700"
+    "bg-yellow-100 text-yellow-700",
+    "bg-emerald-100 text-emerald-700"
   ];
 
   // Hàm lấy màu theo giáo viên

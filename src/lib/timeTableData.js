@@ -1,4 +1,4 @@
-export const ROOMS = ["p1","p2","p3","p4","p5","p6"]
+export const ROOMS = ["p1","p2","p3","p4","p5","p6","p7","p8"]
 
 export const SLOTS = [
   "07:30","09:00","13:30","15:00","16:30","18:00"
