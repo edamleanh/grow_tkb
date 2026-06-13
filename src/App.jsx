@@ -674,7 +674,15 @@ export default function App() {
 
       {/* Dialog thêm/sửa */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent
+          className="sm:max-w-md"
+          onOpenAutoFocus={(e) => {
+            e.preventDefault();
+            setTimeout(() => {
+              document.getElementById("subject-input")?.focus();
+            }, 0);
+          }}
+        >
           <DialogHeader>
             <DialogTitle>{editingKey ? "Sửa lớp học" : "Thêm lớp học"}</DialogTitle>
           </DialogHeader>
@@ -742,6 +750,7 @@ export default function App() {
             <div>
               <label className="text-xs text-neutral-500">Lớp học *</label>
               <Input
+                id="subject-input"
                 value={form.subject}
                 onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
                 placeholder="VD: Toán 9"
