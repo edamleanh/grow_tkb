@@ -260,7 +260,7 @@ export default function App() {
       slot: slot || SLOTS[0] || '',
       room: room || ROOMS[0] || '',
       subject: "",
-      teacher: TEACHERS[0] || '',
+      teacher: room === 'p8' ? "Cô Ngọc" : (TEACHERS[0] || ''),
       note: ""
     })
     setEditingKey(null)
@@ -724,7 +724,7 @@ export default function App() {
               <label className="text-xs text-neutral-500">Phòng</label>
               <Select
                 value={form.room}
-                onValueChange={v => setForm(f => ({ ...f, room: v }))}
+                onValueChange={v => setForm(f => ({ ...f, room: v, teacher: v === 'p8' ? "Cô Ngọc" : f.teacher }))}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Chọn phòng" />
