@@ -195,7 +195,7 @@ export default function App() {
     "bg-amber-100 text-amber-700",
     "bg-purple-100 text-purple-700",
     "bg-blue-100 text-blue-700",
-    "bg-pink-100 text-pink-700",
+    "bg-emerald-100 text-emerald-700",
     "bg-red-100 text-red-700",
     "bg-cyan-100 text-cyan-700",
     "bg-lime-100 text-lime-700",
@@ -206,7 +206,7 @@ export default function App() {
     "bg-gray-100 text-gray-700",
     "bg-red-100 text-red-700",
     "bg-yellow-100 text-yellow-700",
-    "bg-emerald-100 text-emerald-700",
+    "bg-pink-100 text-pink-700",
     "bg-sky-100 text-sky-700"
   ];
 
